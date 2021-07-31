@@ -52,11 +52,11 @@ RSERIES = {3: [1.00, 2.20, 4.70],
                9.76, 9.88]}
 
 
-def dop_part(symbol, module, fields=None):
+def dop_part(symbol, module, fields=None, value=None):
     """Returns a part from the Doppelganger library"""
     if fields is None:
         fields = {}
-    p = Part(lib="Doppelganger.lib", name=symbol,
+    p = Part(lib="Doppelganger.lib", name=symbol, value=value,
              footprint=F"Doppelganger:{module}")
 
     # Merges the fields part
