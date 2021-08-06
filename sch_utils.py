@@ -78,29 +78,44 @@ def get_res_from_std(r, serie=12):
 
 # Resistor, Capacitor & Inductor Basics
 
-def get_res(value, package, fields=None):
+def get_res(value, package, use_dedicated_value_field=True,
+            fields=None):
     """Returns a resistor with default package"""
     if fields is None:
         fields = {}
     fields["value"] = str(value)
-    return dop_part("R", package+"R", fields=fields)
+    if use_dedicated_value_field:
+        dvf = str(value)
+    else:
+        dvf = None
+    return dop_part("R", package+"R", value=dvf, fields=fields)
 
 
-def get_capa(value, package, fields=None):
+def get_capa(value, package, use_dedicated_value_field=True,
+             fields=None):
     """Returns a capacitor with default package"""
     if fields is None:
         fields = {}
     package_str = package + "C"
     fields["value"] = str(value)
-    return dop_part("C", package+"C", fields=fields)
+    if use_dedicated_value_field:
+        dvf = str(value)
+    else:
+        dvf = None
+    return dop_part("C", package+"C", value=dvf, fields=fields)
 
-def get_inductance(value, package, fields=None):
+def get_inductance(value, package, use_dedicated_value_field=True,
+                   fields=None):
     """Returns an inductance with default package"""
     if fields is None:
         fields = {}
     package_str = package + "L"
     fields["value"] = str(value)
-    return dop_part("L", package+"L", fields=fields)
+    if use_dedicated_value_field:
+        dvf = str(value)
+    else:
+        dvf = None
+    return dop_part("L", package+"L", value=dvf, fields=fields)
 
 def pull_updown(power, signals, value, package="0603", fields=None):
     """Insert a PullUp or PullDown on the given signal"""
