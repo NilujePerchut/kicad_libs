@@ -6,6 +6,12 @@ import pcbnew
 from pcbnew import wxPoint
 
 
+def get_net_by_name(pcb, netname):
+    """Returns the net of given netname"""
+    nets = pcb.GetNetsByName()
+    return nets.find(netname).value()[1]
+
+
 def get_layer_table(pcb):
     """Returns the layer table"""
     layertable = {}
