@@ -52,6 +52,13 @@ def create_via(pcb, net, pos, toplayer="F.Cu", bottomlayer="B.Cu"):
     return via
 
 
+def _get_width_from_net_class(pcb, net):
+    """Returns track width form net's class"""
+    net_classes = pcb.GetDesignSettings().m_NetClasses
+    net_class = net_classes.Find(net.GetClassName())
+    return net_class.GetTrackWidth()
+
+
 def route_direct_points(pcb, p1, p2, net, layer):
     """Route 2 pads"""
     track = pcbnew.TRACK(pcb)
@@ -60,6 +67,7 @@ def route_direct_points(pcb, p1, p2, net, layer):
     track.SetNet(net)
     track.SetStart(p1)
     track.SetEnd(p2)
+    track.SetWidth(_get_width_from_net_class(pcb, net))
 
 
 def route_2_pads(pcb, pad1, pad2, layer):
