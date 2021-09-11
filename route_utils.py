@@ -35,6 +35,23 @@ def get_pad_by_name(module, name):
     return None
 
 
+def create_via(pcb, net, pos, toplayer="F.Cu", bottomlayer="B.Cu"):
+    """Create a via"""
+    layer_table = get_layer_table(pcb)
+
+    via = pcbnew.VIA(pcb)
+    pcb.Add(via)
+    toplayer = layer_table[toplayer]
+    bottomlayer = layer_table[bottomlayer]
+    via.SetNet(net)
+    nc = net.GetNetClass()
+    via.SetWidth(nc.GetViaDiameter())
+    via.SetLayerPair(toplayer, bottomlayer)
+    via.SetViaType(pcbnew.VIA_THROUGH)
+    via.SetPosition(pos)
+    return via
+
+
 def route_direct_points(pcb, p1, p2, net, layer):
     """Route 2 pads"""
     track = pcbnew.TRACK(pcb)
