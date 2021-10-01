@@ -78,6 +78,9 @@ def route_2_pads(pcb, pad1, pad2, layer):
     if pad1.GetNet().GetNetname() != pad2.GetNet().GetNetname():
         assert False, "NetName is different for both pads"
 
-    middle_point = wxPoint((locs[0].x + locs[1].x)/2, locs[0].y)
-    route_direct_points(pcb, locs[0], middle_point, pad1.GetNet(), layer)
-    route_direct_points(pcb, middle_point, locs[1], pad2.GetNet(), layer)
+    if (locs[0].x == locs[1].x) or (locs[0].y == locs[1].y):
+        route_direct_points(pcb, locs[0], locs[1], pad1.GetNet(), layer)
+    else:
+        middle_point = wxPoint((locs[0].x + locs[1].x)/2, locs[0].y)
+        route_direct_points(pcb, locs[0], middle_point, pad1.GetNet(), layer)
+        route_direct_points(pcb, middle_point, locs[1], pad2.GetNet(), layer)
